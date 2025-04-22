@@ -1,0 +1,46 @@
+server:
+  port: 8160
+
+info:
+  name: Administra moneda extranjera
+  description: Microservicio para administrar el producto moneda extranjera
+  version: 1.0.0
+  contact:
+    name: Mágico Carella
+    mail: mcarella@banchile.cl
+
+spring:
+  application:
+    name: ${project.artifactId}
+    version: ${project.version}
+    namespace: ${banchile.system.namespace}
+
+  datasource:
+    url: jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=10.200.90.4)(PORT=1523)))(CONNECT_DATA=(SERVER=DEDICATED)(SID=ora9des2)))
+    driver-class-name: oracle.jdbc.OracleDriver
+    username: admimex
+    password: admimex123
+  jpa:
+    generate-ddl: false
+    hibernate.ddl-auto: none
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+
+logging:
+  level:
+    cl:
+      banchile: INFO
+    com:
+      zaxxer:
+        hikari:
+          HikariConfig: DEBUG
+
+service:
+  operacion-banco:
+    url: http://${banchile.eap01.host}/cl.banchile.go-svc/OperacionBancoEJB?wsdl
+  comprobante:
+    url: http://${banchile.eap01.host}/cl.banchile.go-svc/ComprobanteServiceEJB?wsdl
+  operacion-instruccion:
+    url: http://${banchile.fuse.host}:${banchile.fuse.port}/canales/ingreso/transferencia/v1/CanalesIngresoTransferencia?wsdl

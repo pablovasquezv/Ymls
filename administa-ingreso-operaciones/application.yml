@@ -1,0 +1,75 @@
+server:
+  port: 8162
+spring:
+  application:
+    name: ${project.artifactId}
+    version: ${project.version}
+    namespace: ${banchile.system.namespace}
+info:
+  name: bchrest-administra-ingreso-operaciones
+  description: Componente de Integracion que permite orquestar las llamadas a los flujos de ingreso de operaciones
+  version: 1.0.0-SNAPSHOT
+  contact:
+    name: Magico Carella
+    mail: mcarella@banchile.cl
+bchrest-administra-ingreso-operaciones:
+  fondos-mutuos:
+    scheme: http
+    host: ${banchile.balisboot.host}
+    port: 8163
+    path: /fondos-mutuos/v1/operaciones
+    path-reinversion: /fondos-mutuos/v1/operaciones/correlativo-reinversion
+  acciones:
+    scheme: http
+    host: ${banchile.balisboot.host}
+    port: 8159
+    path: /acciones/v1/operaciones
+  moneda-extranjera:
+    scheme: http
+    host: ${banchile.balisboot.host}
+    port: 8160
+    path: /moneda-extranjera/v1/operaciones
+service:
+  transaccion-estadosolicitud:
+    url: http://${banchile.eap01.host}/cl.banchile.estado.solicitudoperacion.java.eapsrv-svc/TransaccionServiceEjb?wsdl
+  transaccion-liquidacion:
+    url: http://${banchile.eap01.host}/cl.banchile.liquidaciones.java.eapsrv-svc/TransaccionLiquidacionServiceEjb?wsdl
+  bizagi:
+    url: http://${banchile.bizagi.host}/ProcesosBanchile_Des/webservices/WorkflowEngineSOA.asmx?wsdl
+  transaccion-orden:
+    url: http://${banchile.eap01.host}/cl.banchile.liquidaciones.java.eapsrv-svc/OrdenEjb?wsdl
+constantes:
+  ingresarCaso: 2
+  errorIngresoOperacion: 4
+  errorIngresoOperacionInstruccion: 5
+  exitoIngresoOperacion: 3
+  mensajeErrorACC: "Ha ocurrido un error en Acciones: {0}"
+  mensajeErrorFFMM: "Ha ocurrido un error en FFMM: {0}"
+  mensajeErrorMEX: "Ha ocurrido un error en MEX: {0}"
+  mensajeErrorInstruccion: "Ha ocurrido un error en Instrucción: {0} {1}"
+  mensajeExitoACC: "Ingreso de operación Acciones realizado exitosamente"
+  mensajeExitoFFMM: "Ingreso de operación Fondos Mutuos realizado exitosamente"
+  mensajeExitoMEX: "Ingreso de operación Moneda Extranjera realizado exitosamente"
+  usuarioInternet: "INTERNET"
+  instruccionCobro: "COBRO"
+  instruccionPago: "PAGO"
+  operacionRescate: "RESCATE"
+  operacionVenta: "VENTA"
+  operacionCompra: "COMPRA"
+  operacionAporte: "APORTE"
+  divisa: "DIVISA"
+  monedaExtranjera: "MONEDAEXTRANJERA"
+  reinversionDolar: "RNV-DOL"
+  mensajeErrorIngresoOperaciones: "Al Ingresar la Operacion"
+modalidades:
+  listanegra: 249, 250, 247, 248
+logging:
+  level:
+    cl:
+      banchile: INFO
+    org:
+      springframework: ERROR
+    com:
+      zaxxer:
+        hikari:
+          HikariConfig: ERROR

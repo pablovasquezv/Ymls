@@ -1,0 +1,53 @@
+server:
+  port: 8163
+
+info:
+  name: Administra Fondos Mutuos
+  description: Microservicio para administrar el producto Fondos Mutuos
+  version: 1.0.0
+  contact:
+    name: Mágico Carella
+    mail: mcarella@banchile.cl
+
+spring:
+  application:
+    name: ${project.artifactId}
+    version: ${project.version}
+    namespace: ${banchile.system.namespace}
+
+  datasource:
+    url: jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=10.200.90.4)(PORT=1523)))(CONNECT_DATA=(SERVER=DEDICATED)(SID=ora9des2)))
+    driver-class-name: oracle.jdbc.OracleDriver
+    username: admifmu
+    password: admifmu123
+  jpa:
+    generate-ddl: false
+    hibernate.ddl-auto: none
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+
+logging:
+  level:
+    root: INFO
+    org:
+      springframework: INFO
+    cl:
+      banchile: INFO
+    com:
+      zaxxer:
+        hikari:
+          HikariConfig: DEBUG
+
+transaccion-liquidacion:
+  url: http://${banchile.eap01.host}/cl.banchile.liquidaciones.java.eapsrv-svc/TransaccionLiquidacionServiceEjb?wsdl
+
+transaccion-movimientos-fondos:
+  url: http://${banchile.eap01.host}/cl.banchile.fondosmutuos-svc/MovimientoFondoMutuoEJB?wsdl
+
+service:
+  operacion-banco:
+    url: http://${banchile.eap01.host}/cl.banchile.go-svc/OperacionBancoEJB?wsdl
+  comprobante:
+    url: http://${banchile.eap01.host}/cl.banchile.go-svc/ComprobanteServiceEJB?wsdl

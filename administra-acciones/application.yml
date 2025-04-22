@@ -1,0 +1,31 @@
+server:
+  port: 8159
+
+info:
+  name: Administra Acciones
+  description: Microservicio para administrar el producto Acciones
+  version: 1.0.0
+  contact:
+    name: Mágico Carella
+    mail: mcarella@banchile.cl
+
+spring:
+  application:
+    name: ${project.artifactId}
+    version: ${project.version}
+    namespace: ${banchile.system.namespace}
+
+logging:
+  level:
+    cl:
+      banchile: INFO
+    com:
+      zaxxer:
+        hikari:
+          HikariConfig: DEBUG
+
+service:
+  operacion-banco:
+    url: http://${banchile.eap01.host}/cl.banchile.go-svc/OperacionBancoEJB?wsdl
+  comprobante:
+    url: http://${banchile.eap01.host}/cl.banchile.go-svc/ComprobanteServiceEJB?wsdl
